@@ -1,0 +1,6 @@
+artifacts
+broadcast
+lcov.info
+cache
+.env
+docs

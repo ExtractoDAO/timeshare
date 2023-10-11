@@ -1,0 +1,7 @@
+- Se o Contrato está a venda, eu posso sacar?: Nao pode sacar
+- Eu posso colocar 2 ordens de vensa?: Ordem de venda para cada contrato
+- Posso comprar um meu contrato que está a venda?: Não
+- O que acontece se um contrato a venda vencer?: Fecha a ordem de compra e libera o saque
+- Um contrato vencido pode ser colocado a venda?: Não
+- Um contrato vencido deve ser sacado em 7 dias.
+- Contrato precisa ter um nome: ID
