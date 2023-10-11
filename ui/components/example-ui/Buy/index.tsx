@@ -7,7 +7,6 @@ import { ethers } from "ethers";
 import deployedContracts from "~~/generated/deployedContracts";
 
 export const Buy = () => {
-  const [selectedToken, setSelectedToken] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const [commodAmount, setCommodAmount] = useState<number>(0);
   const Price = 2;
@@ -30,10 +29,7 @@ export const Buy = () => {
     return 18
   }
 
-  const handleTokenSelect = (token: string) => {
-    setSelectedToken(token);
-    console.log("selectedToken:", token)
-  };
+  const selectedToken = "MockToken";
 
   const { writeAsync: approveAsync } = useScaffoldContractWrite({
     contractName: selectedToken,
@@ -55,7 +51,7 @@ export const Buy = () => {
 
   return (
     <div className="max-w-[640px] flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
-      <SelectToken onTokenSelect={handleTokenSelect} />
+      <SelectToken />
 
       <div className="m-auto w-4/5 h-[88px] bg-slate-50 border-slate-200 border-solid border-[1px] rounded-[4px]">
         <Input

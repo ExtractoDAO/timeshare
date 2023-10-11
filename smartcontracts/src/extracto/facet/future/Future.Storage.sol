@@ -2,7 +2,7 @@
 pragma solidity ^0.8.18;
 
 import {FEvents} from "./Future.Events.sol";
-import {Commodity} from "../commodity/Commodity.sol";
+import {Commodity} from "../commodity/v2.0.0/Commodity.sol";
 
 abstract contract FStorage is FEvents {
     /*//////////////////////////////////////////////////////////////

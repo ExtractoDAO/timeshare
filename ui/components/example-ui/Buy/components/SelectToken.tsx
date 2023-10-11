@@ -1,57 +1,43 @@
-import React, { useEffect, useRef, useState } from "react";
-import { IconBusd } from "../../assets/icontoken/busd";
-import { IconDai } from "../../assets/icontoken/dai";
-import { IconUsdc } from "../../assets/icontoken/usdc";
-import { IconUsdt } from "../../assets/icontoken/usdt";
+import React, { useState, useEffect, useRef } from 'react';
+import { IconBusd } from '../../assets/icontoken/busd';
+import { IconDai } from '../../assets/icontoken/dai';
+import { IconUsdt } from '../../assets/icontoken/usdt';
+import { IconUsdc } from '../../assets/icontoken/usdc';
 
 const LisToken = [
   {
-    token: "COW",
-    icon: <IconUsdt className={""} />,
+    token: 'Tether',
+    icon: <IconUsdt className={''} />,
   },
   {
-    token: "Commodity",
-    icon: <IconBusd className={""} />,
+    token: 'Binance USD',
+    icon: <IconBusd className={''} />,
   },
   {
-    token: "Dex",
-    icon: <IconUsdc className={""} />,
+    token: 'USD Coin',
+    icon: <IconUsdc className={''} />,
   },
   {
-    token: "Diamond",
-    icon: <IconDai className={""} />,
-  },
-  {
-    token: "Future",
-    icon: <IconDai className={""} />,
-  },
-  {
-    token: "USDT",
-    icon: <IconDai className={""} />,
-  },
-  {
-    token: "USDC",
-    icon: <IconDai className={""} />,
+    token: 'Dai',
+    icon: <IconDai className={''} />,
   },
 ];
 
-export function SelectToken({ className, onTokenSelect }: { className?: string, onTokenSelect: (token: string) => void }) {
+export function SelectToken({ className }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedToken, setSelectedToken] = useState("");
+  const [selectedToken, setSelectedToken] = useState('');
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   };
 
-  const handleTokenChange = (event: { target: any }) => {
+  const handleTokenChange = (event: { target: any; }) => {
     setSelectedToken(event.target.value);
-    onTokenSelect(selectedToken);
-    console.log("onTokenSelect:", event.target.value);
   };
 
-  const selectedTokenItem = LisToken.find(item => item.token === selectedToken);
+  const selectedTokenItem = LisToken.find((item) => item.token === selectedToken);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -60,26 +46,26 @@ export function SelectToken({ className, onTokenSelect }: { className?: string, 
       }
     };
 
-    document.addEventListener("click", handleOutsideClick);
+    document.addEventListener('click', handleOutsideClick);
 
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
+      document.removeEventListener('click', handleOutsideClick);
     };
   }, []);
 
   return (
-    <div
-      className="
+    <div className='
     inline-block
     m-auto
     mb-2
-    "
+    '
+
     >
-      <div className="relative" ref={dropdownRef}>
+      <div className='relative' ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
-          type="button"
-          className="
+          type='button'
+          className='
           flex 
           items-center 
           justify-between 
@@ -93,20 +79,19 @@ export function SelectToken({ className, onTokenSelect }: { className?: string, 
           text-lg 
           sm:text-2xl 
           placeholder-white 
-          uppercase"
+          uppercase'
         >
           {selectedTokenItem ? (
             <>
-              <span className="mr-2">{selectedTokenItem.icon}</span>
+              <span className='mr-2'>{selectedTokenItem.icon}</span>
               <span>{selectedTokenItem.token}</span>
             </>
           ) : (
-            <span className="text-gray-500">Select a token</span>
+            <span className='text-gray-500'>Select a token</span>
           )}
         </button>
         {isOpen && (
-          <div
-            className="
+          <div className='
           absolute 
           z-10
           w-full
@@ -115,9 +100,9 @@ export function SelectToken({ className, onTokenSelect }: { className?: string, 
           mt-2 
           bg-white 
           rounded-6
-          shadow-lg"
+          shadow-lg'
           >
-            <ul className="py-1">
+            <ul className='py-1'>
               {LisToken.map((item, i) => (
                 <li
                   key={i}
@@ -132,10 +117,11 @@ export function SelectToken({ className, onTokenSelect }: { className?: string, 
                   py-2
                   text-black 
                   cursor-pointer 
-                  ${item.token === selectedToken ? "bg-gray-200" : ""}`}
+                  ${item.token === selectedToken ? 'bg-gray-200' : ''
+                    }`}
                 >
-                  <span className="font-bold">{item.icon}</span>
-                  <span className="ml-2">{item.token}</span>
+                  <span className='font-bold'>{item.icon}</span>
+                  <span className='ml-2'>{item.token}</span>
                 </li>
               ))}
             </ul>

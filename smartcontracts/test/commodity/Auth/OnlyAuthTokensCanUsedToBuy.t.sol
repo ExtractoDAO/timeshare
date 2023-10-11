@@ -6,7 +6,7 @@ import {
     Unauthorized,
     ZeroAddress,
     UnavailableKilos
-} from "../../../src/extracto/facet/commodity/Commodity.Auth.sol";
+} from "../../../src/extracto/facet/commodity/v2.0.0/Commodity.Auth.sol";
 import {Future} from "../../../src/extracto/facet/future/Future.sol";
 import {BaseSetup} from "../../BaseSetup.t.sol";
 import {MockToken} from "../../MockToken.t.sol";

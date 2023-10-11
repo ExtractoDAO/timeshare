@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 import {Facet, Action} from "../../src/extracto/diamond/interfaces/Types.sol";
-import {Dex} from "../../src/extracto/facet/dex/Dex.sol";
+import {Dex} from "../../src/extracto/facet/dex/v2.0.0/Dex.sol";
 import {BaseSetup} from "../BaseSetup.t.sol";
 
 contract DexBaseSetup is BaseSetup {
