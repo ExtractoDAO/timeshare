@@ -85,7 +85,7 @@ abstract contract Helper is Data {
         view
         returns (bytes4[] memory selectors)
     {
-        selectors = new bytes4[](5);
+        selectors = new bytes4[](6);
 
         selectors[0] = dex.sellOrders.selector;
         selectors[1] = dex.sellOrder.selector;
