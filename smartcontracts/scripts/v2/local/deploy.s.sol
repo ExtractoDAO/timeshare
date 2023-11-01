@@ -92,6 +92,7 @@ abstract contract Helper is Data {
         selectors[2] = dex.buyOrders.selector;
         selectors[3] = dex.buyOrder.selector;
         selectors[4] = dex.cancelOrder.selector;
+        selectors[5] = dex.ordersByInvestor.selector;
     }
 }
 
