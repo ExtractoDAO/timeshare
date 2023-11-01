@@ -14,13 +14,14 @@ abstract contract FStorage is FEvents {
     uint256 public immutable getKg;
     address public immutable dao;
     address public investor;
+    uint256 public blockTarget;
     bool public burn;
     bytes32 orderId;
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
-    constructor(uint256 _kg, address _investor, address _dao, uint256 _locktime) {
+    constructor(uint256 _kg, address _investor, address _dao, uint256 _locktime, uint256 _blockTarget) {
         require(_investor != address(0x0), "ZERO_ADDRESS");
 
         getLockTime = block.number + _locktime;
@@ -28,5 +29,6 @@ abstract contract FStorage is FEvents {
         investor = _investor;
         dao = _dao;
         getKg = _kg;
+        blockTarget = _blockTarget;
     }
 }
