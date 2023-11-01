@@ -12,6 +12,7 @@ library CommodityStorageLib {
         address future;
         uint256 commodityAmount;
         bool burn;
+        uint256 blockTarget;
     }
 
     struct TokenAndDecimals {
