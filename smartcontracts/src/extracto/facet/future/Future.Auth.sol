@@ -15,8 +15,8 @@ abstract contract FAuth is FStorage {
     //////////////////////////////////////////////////////////////*/
     bool private locked = false;
 
-    constructor(uint256 _kg, address _investor, address _dao, uint256 _locktime)
-        FStorage(_kg, _investor, _dao, _locktime)
+    constructor(uint256 _kg, address _investor, address _dao, uint256 _locktime, uint256 _blockTarget)
+        FStorage(_kg, _investor, _dao, _locktime, _blockTarget)
     {}
 
     /*//////////////////////////////////////////////////////////////

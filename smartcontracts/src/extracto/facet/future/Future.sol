@@ -9,7 +9,7 @@ contract Future is FBase {
                                CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
 
-    constructor(uint256 _kg, address _investor, uint256 _locktime) FBase(_kg, _investor, msg.sender, _locktime) {}
+    constructor(uint256 _kg, address _investor, uint256 _locktime, uint256 _blockTarget) FBase(_kg, _investor, msg.sender, _locktime, _blockTarget) {}
 
     /*//////////////////////////////////////////////////////////////
                                FUTURE LOGIC
