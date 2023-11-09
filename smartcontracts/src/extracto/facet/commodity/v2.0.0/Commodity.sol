@@ -85,14 +85,16 @@ contract Commodity is Math {
 
         CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
 
+        uint256 blockTarget = calculateBlockTarget(block.number, lib.locktime);
+
         calculateNewSupply(amount);
         kg = calculateBuyKg(amount, lib.allowedTokens[tokenAddress].decimals);
 
-        Future futureContract = new Future(kg, msg.sender, lib.locktime);
+        Future futureContract = new Future(kg, msg.sender, lib.locktime, blockTarget);
         future = address(futureContract);
 
-        lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, kg, false));
-        lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, kg, false);
+        lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, kg, false, blockTarget));
+        lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, kg, false, blockTarget);
         lib.drawer.push(future);
 
         validatePayment(tokenAddress, amount);

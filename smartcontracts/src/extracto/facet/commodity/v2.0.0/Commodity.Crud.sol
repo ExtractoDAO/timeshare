@@ -59,7 +59,7 @@ abstract contract Crud is Auth {
     function getContractByAddress(address future)
         public
         view
-        returns (address investor, address _future, uint256 kg, bool burn)
+        returns (address investor, address _future, uint256 kg, bool burn, uint256 blockTarget)
     {
         CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
         CommodityStorageLib.Contract memory _contract = lib.contracts[future];
@@ -68,6 +68,7 @@ abstract contract Crud is Auth {
         _future = _contract.future;
         kg = _contract.commodityAmount;
         burn = _contract.burn;
+        blockTarget = _contract.blockTarget;
     }
 
     function getAllowedTokens() public view returns (address[] memory tokens) {
