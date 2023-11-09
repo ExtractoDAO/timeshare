@@ -6,6 +6,7 @@ forge script scripts/v2/local/deploy.s.sol:Local \
     --verbosity
 
 python deploy.py
+python3 deploy.py
 
 forge script scripts/v2/local/validation/buy.s.sol:Buy \
     --rpc-url http://127.0.0.1:8545 \
