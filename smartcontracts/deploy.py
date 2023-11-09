@@ -18,7 +18,7 @@ class Contract:
     abi: list = field(default_factory=list)
 
 
-CHAIN_ID = 31337
+CHAIN_ID = 80001
 CONTRACT_SCRIPT_NAME = "deploy.s.sol"
 TRANSACTIONS_PATH = f"broadcast/{CONTRACT_SCRIPT_NAME}/{CHAIN_ID}/run-latest.json"
 TARGET_DIR = "../ui/generated/deployedContracts.ts"
@@ -65,7 +65,7 @@ with open(TRANSACTIONS_PATH) as deployed_contracts:
 json_config = {
     CHAIN_ID: [
         {
-            "name": "localhost",
+            "name": "mumbai",
             "chainId": str(CHAIN_ID),
             "contracts": {}
         }

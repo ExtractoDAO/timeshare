@@ -13,7 +13,7 @@ abstract contract Data is Script {
     bytes32 privateKey = vm.envBytes32("MUMBAI_PRIVATE_KEY");
     address controller = vm.addr(bytes2uint(privateKey));
     // Robson's address
-    address dao = address(0x78CAA01F86c42348e847BCEd7e64464B073F3FFf);
+    address dao = address(0x61839Df242801888ECA001246269D0C747c434Ee);
     uint256 commodityBuyPrice = 2_00 * 1e16;
     uint256 commoditySellPrice = 2_00 * 1e16;
     uint256 commoditySupply = 1_000_000 * 1e18;
