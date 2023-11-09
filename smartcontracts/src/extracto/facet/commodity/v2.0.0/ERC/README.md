@@ -89,7 +89,6 @@ interface ICommodity {
 }
 ```
 
-
 # Commodity Abstract
 
 ```

@@ -3,9 +3,9 @@ pragma solidity ^0.8.18;
 
 import "../../../lib/forge-std/src/Script.sol";
 import {Facet, Action} from "../../../src/extracto/diamond/interfaces/Types.sol";
-import {Commodity} from "../../../src/extracto/facet/commodity/Commodity.sol";
+import {Commodity} from "../../../src/extracto/facet/commodity/v2.0.0/Commodity.sol";
 import {Diamond} from "../../../src/extracto/diamond/Diamond.sol";
-import {Dex} from "../../../src/extracto/facet/dex/Dex.sol";
+import {Dex} from "../../../src/extracto/facet/dex/v2.0.0/Dex.sol";
 import {MockToken} from "../../../test/MockToken.t.sol";
 import {COW} from "../../../src/token/COW.sol";
 
@@ -76,13 +76,14 @@ abstract contract Helper is Data {
     }
 
     function dexFacetSelectors() public view returns (bytes4[] memory selectors) {
-        selectors = new bytes4[](5);
+        selectors = new bytes4[](6);
 
         selectors[0] = dex.sellOrders.selector;
         selectors[1] = dex.sellOrder.selector;
         selectors[2] = dex.buyOrders.selector;
         selectors[3] = dex.buyOrder.selector;
         selectors[4] = dex.cancelOrder.selector;
+        selectors[5] = dex.ordersByInvestor.selector;
     }
 }
 

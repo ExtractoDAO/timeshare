@@ -2,9 +2,9 @@
 pragma solidity ^0.8.18;
 
 import "../../../../lib/forge-std/src/Script.sol";
-import {Commodity} from "../../../../src/extracto/facet/commodity/Commodity.sol";
+import {Commodity} from "../../../../src/extracto/facet/commodity/v2.0.0/Commodity.sol";
 import {Future} from "../../../../src/extracto/facet/future/Future.sol";
-import {Dex, DexStorageLib} from "../../../../src/extracto/facet/dex/Dex.sol";
+import {Dex, DexStorageLib} from "../../../../src/extracto/facet/dex/v2.0.0/Dex.sol";
 import {Diamond} from "../../../../src/extracto/diamond/Diamond.sol";
 import {MockToken} from "../../../../test/MockToken.t.sol";
 

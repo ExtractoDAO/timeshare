@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import {BurnContract} from "../../src/extracto/facet/commodity/Commodity.Auth.sol";
+import {BurnContract} from "../../src/extracto/facet/commodity/v2.0.0/Commodity.Auth.sol";
 import {ZeroAddress, Unauthorized, Locktime} from "../../src/extracto/facet/future/Future.Auth.sol";
-import {Commodity} from "../../src/extracto/facet/commodity/Commodity.sol";
+import {Commodity} from "../../src/extracto/facet/commodity/v2.0.0/Commodity.sol";
 import {Future} from "../../src/extracto/facet/future/Future.sol";
 import {BaseSetup} from "../BaseSetup.t.sol";
 
