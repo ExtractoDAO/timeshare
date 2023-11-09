@@ -24,7 +24,7 @@ TRANSACTIONS_PATH = f"broadcast/{CONTRACT_SCRIPT_NAME}/{CHAIN_ID}/run-latest.jso
 TARGET_DIR = "../ui/generated/deployedContracts.ts"
 TOKENS = ["USDT", "USDC"]
 DIAMOND_ADDRESS = ""
- 
+
 def abi_path(name) -> str:
     if(name == "MockToken"):
         return f"artifacts/{name}.t.sol/{name}.json"
@@ -52,7 +52,7 @@ with open(TRANSACTIONS_PATH) as deployed_contracts:
                 if name == "MockToken":
                     name = TOKENS[0]
                     TOKENS.remove(TOKENS[0])
-                
+
                 contracts.append(Contract(name, address, abi))
 
     for contract in contracts:

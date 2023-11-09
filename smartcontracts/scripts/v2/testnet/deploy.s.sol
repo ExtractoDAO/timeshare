@@ -91,9 +91,12 @@ contract Testnet is Helper {
     constructor() Helper() {}
 
     function run() external {
-        vm.startBroadcast(vm.envUint("MUMBAI_PRIVATE_KEY"));
+       // vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+         vm.startBroadcast(vm.envUint("MUMBAI_PRIVATE_KEY"));
 
         usdt = new MockToken("ExUSDT", commoditySupply * 1e18, 18);
+        usdt.transfer(0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 10000 * 1e18);
+
         tokens.push(address(usdt));
         decimals.push(18);
 
@@ -103,12 +106,19 @@ contract Testnet is Helper {
         cow = new COW();
         cow.setDao(address(diamond));
 
-        Facet memory commodityFunctions =
-            Facet({facetAddress: address(commodity), action: Action.Save, fnSelectors: commodityFacetSelectors()});
+        Facet memory commodityFunctions = Facet({
+            facetAddress: address(commodity),
+            action: Action.Save,
+            fnSelectors: commodityFacetSelectors()
+        });
 
         bytes memory init = abi.encodeWithSelector(
             bytes4(
-                keccak256(bytes("init(address[],uint8[],uint256,uint256,uint256,uint256,uint8,bool,address,address)"))
+                keccak256(
+                    bytes(
+                        "init(address[],uint8[],uint256,uint256,uint256,uint256,uint8,bool,address,address)"
+                    )
+                )
             ),
             tokens,
             decimals,
@@ -124,16 +134,19 @@ contract Testnet is Helper {
         commodityCut.push(commodityFunctions);
         diamond.diamondCut(commodityCut, address(commodity), init);
 
-        Facet memory dexFunctions =
-            Facet({facetAddress: address(dex), action: Action.Save, fnSelectors: dexFacetSelectors()});
+        Facet memory dexFunctions = Facet({
+            facetAddress: address(dex),
+            action: Action.Save,
+            fnSelectors: dexFacetSelectors()
+        });
         dexCut.push(dexFunctions);
         diamond.diamondCut(dexCut, address(0x0), new bytes(0));
 
         console.log("Commodity address: ", address(commodity));
         console.log("Diamond address:   ", address(diamond));
-        console.log("ExUSDT address:    ", address(usdt));
-        console.log("Dex address:       ", address(dex));
+        console.log("ExUSDT address:      ", address(usdt));
         console.log("COW address:       ", address(cow));
+        console.log("Dex address:       ", address(dex));
         vm.stopBroadcast();
     }
 }
