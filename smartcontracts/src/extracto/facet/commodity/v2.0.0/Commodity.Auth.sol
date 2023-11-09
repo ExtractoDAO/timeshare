@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import {CommodityStorageLib} from "../../diamond/libraries/Lib.Commodity.sol";
-import {DexStorageLib} from "../../diamond/libraries/Lib.Dex.sol";
-import {ERC20} from "../../../token/ERC20.sol";
+import {CommodityStorageLib} from "../../../diamond/libraries/Lib.Commodity.sol";
+import {DexStorageLib} from "../../../diamond/libraries/Lib.Dex.sol";
+import {ERC20} from "../../../../token/ERC20.sol";
 
 // 0xf73354fb
 error TokensDecimalsLengthError(uint256 tokensLength, uint256 decimalsLength);

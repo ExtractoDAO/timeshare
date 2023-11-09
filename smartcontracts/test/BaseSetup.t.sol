@@ -2,8 +2,8 @@
 pragma solidity ^0.8.16;
 
 import {Facet, Action} from "../src/extracto/diamond/interfaces/Types.sol";
-import {Commodity} from "../src/extracto/facet/commodity/Commodity.sol";
-import {Commodity} from "../src/extracto/facet/commodity/Commodity.sol";
+import {Commodity} from "../src/extracto/facet/commodity/v2.0.0/Commodity.sol";
+import {Commodity} from "../src/extracto/facet/commodity/v2.0.0/Commodity.sol";
 import {Future} from "../src/extracto/facet/future/Future.sol";
 import {Diamond} from "../src/extracto/diamond/Diamond.sol";
 import {MockToken} from "./MockToken.t.sol";

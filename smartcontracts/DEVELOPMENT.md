@@ -55,6 +55,28 @@ Deploy your contracts
 
 **To develop a new feature, you need to:**
 
-1. Create a new folder with the new version of the deployment
-2. Implement only the correction or addition of the function
-3. create a new deploy script with the new version number
+1. Create a new folder with the new version of the deployment:
+
+```
+src/extracto/facet
+└── commodity/
+    ├── v2.0.0/
+    ├── v2.0.1/
+    ├── v2.4.19/
+    ├── v3.0.1/
+    └── vX.Y.Z.
+```
+
+2. Implement ONLY the correction or addition of the function
+   - You new contract should have JUST the new/updated functions
+   - You contract should have a `version` string like this:
+
+```js
+
+contract NewContract {
+    string public version = "v2.14.8";
+    // rest of your code
+}
+```
+
+3. Update the deploy script called `upgrade.s.sol`

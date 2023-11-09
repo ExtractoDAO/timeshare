@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import {CommodityStorageLib} from "../../diamond/libraries/Lib.Commodity.sol";
-import {COW} from "../../../token/COW.sol";
+import {CommodityStorageLib} from "../../../diamond/libraries/Lib.Commodity.sol";
+import {COW} from "../../../../token/COW.sol";
 import {Auth} from "./Commodity.Auth.sol";
 
 abstract contract Crud is Auth {
