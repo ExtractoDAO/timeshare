@@ -216,7 +216,7 @@ abstract contract Auth {
     function onlyNonListed(address future) internal view {
         DexStorageLib.Storage storage dex = DexStorageLib.getDexStorage();
         if (dex.sellOrdersByAddress[future].investor != address(0x0)) {
-            revert FutureAlreadyListed();
+            revert("FutureAlreadyListed");
         }
     }
 
