@@ -21,7 +21,7 @@ abstract contract FBase is FAuth {
     }
 
     function sellOrder(uint256 amount) internal returns (bytes32 id) {
-        timeUnlocked();
+        timeLocked();
         bytes memory payload = abi.encodeWithSignature("sellOrder(address,uint256)", investor, amount);
         (bool ok, bytes memory data) = address(extracto).call(payload);
         if (!ok) {
@@ -35,7 +35,7 @@ abstract contract FBase is FAuth {
     }
 
     function cancellOrder() internal {
-        bytes memory payload = abi.encodeWithSignature("cancelOrder(bytes32)", orderId);
+        bytes memory payload = abi.encodeWithSignature("cancelOrderByInvestor(bytes32,address)", orderId, investor);
         (bool ok, bytes memory data) = address(extracto).call(payload);
         if (!ok) {
             assembly {

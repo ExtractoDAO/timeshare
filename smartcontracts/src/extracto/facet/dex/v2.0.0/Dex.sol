@@ -8,6 +8,9 @@ import {Future} from "../../future/Future.sol";
 import "../../../../utils/math/UD60x18.sol";
 import {Crud} from "./Dex.Crud.sol";
 
+
+import "forge-std/console.sol";
+
 contract Dex is Crud {
     constructor() Crud() {}
 
@@ -72,6 +75,19 @@ contract Dex is Crud {
 
             emit BuyOrder(id, buy.amount, buy.commodityAmount);
         }
+    }
+
+    function cancelOrderByInvestor(bytes32 orderId, address investor) external {
+        zeroAddr(investor);
+        onlyTrueOrder(orderId);
+        onlyOwnerOfOrder(investor, orderId);
+
+        removeOrder(investor, orderId);
+
+        DexStorageLib.Storage storage lib = DexStorageLib.getDexStorage();
+        DexStorageLib.Order storage order = lib.orderById[orderId];
+
+        emit CancelOrder(orderId, order.amount, order.commodityAmount, order.typed);
     }
 
     function cancelOrder(bytes32 orderId) external {

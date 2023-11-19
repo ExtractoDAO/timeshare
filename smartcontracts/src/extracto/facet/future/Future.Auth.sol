@@ -49,6 +49,12 @@ abstract contract FAuth is FStorage {
         }
     }
 
+    function timeLocked() internal view {
+        if(block.number > getLockTime) {
+            revert Locktime(getLockTime);
+        }
+    }
+
     function burned() internal view {
         if (burn) {
             revert BurnContract(address(this));
