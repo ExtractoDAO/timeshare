@@ -119,6 +119,11 @@ contract Commodity is Math {
         onlyNotBurnedFutures(msg.sender);
         CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
 
+        int256 contractIndex = findContractIndex(investor, msg.sender);
+
+        CommodityStorageLib.Contract storage contractToUpdate = lib.contractsByInvestor[investor][uint256(contractIndex)];
+        contractToUpdate.burn = true;
+
         lib.contracts[msg.sender].burn = true;
 
         uint256 amount = calculateSellAmountYielded(commodityAmount);
@@ -126,5 +131,19 @@ contract Commodity is Math {
         lib.cow.pay(investor, amount);
 
         emit TokensMinted(amount, investor);
+    }
+
+     function findContractIndex(address investor, address futureAddress) internal view returns (int256) {
+        CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
+
+        CommodityStorageLib.Contract[] storage contracts = lib.contractsByInvestor[investor];
+
+        for (uint256 i = 0; i < contracts.length; i++) {
+            if (contracts[i].future == futureAddress) {
+                return int256(i);
+            }
+        }
+
+        return -1; // Contrato não encontrado
     }
 }
