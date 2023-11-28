@@ -18,7 +18,7 @@ abstract contract Data is Script {
     uint256 commodityBuyPrice = 2_00 * 1e16;
     uint256 commoditySellPrice = 2_00 * 1e16;
     uint256 commoditySupply = 1_000_000 * 1e18;
-    uint256 locktime = 5;
+    uint256 locktime = 1;
     uint8 yieldFarming = 50;
     bool activateSells = true;
 
@@ -93,7 +93,7 @@ abstract contract Helper is Data {
         selectors[3] = dex.buyOrder.selector;
         selectors[4] = dex.cancelOrder.selector;
         selectors[5] = dex.ordersByInvestor.selector;
-        selectors[6] = dex.cancelOrderByInvestor.selector;
+        selectors[6] = dex.cancelOrderForWithdraw.selector;
     }
 }
 

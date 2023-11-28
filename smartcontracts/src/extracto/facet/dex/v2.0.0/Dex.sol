@@ -9,8 +9,6 @@ import "../../../../utils/math/UD60x18.sol";
 import {Crud} from "./Dex.Crud.sol";
 
 
-import "forge-std/console.sol";
-
 contract Dex is Crud {
     constructor() Crud() {}
 
@@ -77,10 +75,11 @@ contract Dex is Crud {
         }
     }
 
-    function cancelOrderByInvestor(bytes32 orderId, address investor) external {
+    function cancelOrderForWithdraw(bytes32 orderId, address investor) external {
         zeroAddr(investor);
         onlyTrueOrder(orderId);
         onlyOwnerOfOrder(investor, orderId);
+        onlyFutures(msg.sender);
 
         removeOrder(investor, orderId);
 

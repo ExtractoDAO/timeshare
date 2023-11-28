@@ -3,6 +3,7 @@ pragma solidity ^0.8.18;
 
 import {FAuth} from "./Future.Auth.sol";
 
+
 abstract contract FBase is FAuth {
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
@@ -36,7 +37,7 @@ abstract contract FBase is FAuth {
 
     function cancellOrder() internal {
         if(orderId != "") {
-            bytes memory payload = abi.encodeWithSignature("cancelOrderByInvestor(bytes32,address)", orderId, investor);
+            bytes memory payload = abi.encodeWithSignature("cancelOrderForWithdraw(bytes32,address)", orderId, msg.sender);
             (bool ok, bytes memory data) = address(extracto).call(payload);
             if (!ok) {
                 assembly {
