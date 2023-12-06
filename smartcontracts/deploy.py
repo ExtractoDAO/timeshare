@@ -18,10 +18,12 @@ class Contract:
     abi: list = field(default_factory=list)
 
 
-CHAIN_ID = 80001
+CHAIN_ID = 31337
 CONTRACT_SCRIPT_NAME = "deploy.s.sol"
+# CONTRACT_SCRIPT_NAME = "upgrade.s.sol"
 TRANSACTIONS_PATH = f"broadcast/{CONTRACT_SCRIPT_NAME}/{CHAIN_ID}/run-latest.json"
-TARGET_DIR = "../../frontend/v2/src/generated/deployedContracts.ts"
+# TARGET_DIR = "../../frontend/v2/src/generated/deployedContracts.ts"
+TARGET_DIR = "../ui/generated/deployedContracts.ts"
 
 TOKENS = ["USDT", "USDC"]
 DIAMOND_ADDRESS = ""
@@ -66,7 +68,7 @@ with open(TRANSACTIONS_PATH) as deployed_contracts:
 json_config = {
     CHAIN_ID: [
         {
-            "name": "mumbai",
+            "name": "localhost",
             "chainId": str(CHAIN_ID),
             "contracts": {}
         }
