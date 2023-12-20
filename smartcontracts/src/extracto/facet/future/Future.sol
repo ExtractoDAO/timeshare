@@ -9,23 +9,27 @@ contract Future is FBase {
                                CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
 
-    constructor(uint256 _kg, address _investor, uint256 _locktime, uint256 _blockTarget) FBase(_kg, _investor, msg.sender, _locktime, _blockTarget) {}
+    constructor(
+        uint256 _weeks,
+        address _investor,
+        uint256 _locktime,
+        uint256 _expirationBlock
+    ) FBase(_weeks, _investor, msg.sender, _locktime, _expirationBlock) {}
 
     /*//////////////////////////////////////////////////////////////
                                FUTURE LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function withdraw() external nonReentrant {
-        burned();
-        onlyInvestor();
-        timeUnlocked();
+      function lockTimeshare() external returns (bool) {
+        onlyInvestor(); // or onyDAO?
+        isLocked = true;
+        return true;
+    }
 
-        _burn();
-
-        emit Withdraw(getKg, investor);
-
-        cancellOrder();
-        extracto.mintToken(getKg, investor);
+    function unlockTimeshare() external returns (bool) {
+        onlyInvestor(); // or onyDAO?
+        isLocked = false;
+        return false;
     }
 
     function sell(uint256 amount) external returns (bytes32) {

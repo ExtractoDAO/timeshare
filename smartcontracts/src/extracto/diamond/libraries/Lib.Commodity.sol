@@ -34,6 +34,9 @@ library CommodityStorageLib {
         uint256 locktime;
         bool activated;
         //
+        address fisicalAddress;
+        uint256[] memory geoCoordinates;
+        //
         address[] allowedTokensList;
         address[] drawer;
         //

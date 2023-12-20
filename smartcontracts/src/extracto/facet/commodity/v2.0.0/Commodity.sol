@@ -9,7 +9,7 @@ import {Math} from "./Commodity.Math.sol";
 
 contract Commodity is Math {
     event TokensMinted(uint256 amount, address investor);
-    event FutureCreated(address future, address owner, uint256 amount, uint256 locktime);
+    event FutureCreated(address future, address owner, uint256 weeks, uint256 locktime);
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
@@ -27,7 +27,9 @@ contract Commodity is Math {
         uint8 yieldFarming,
         bool active,
         address dao,
-        address cow
+        address cow,
+        string fisicalAddress,
+        uint256[] memory geoCoordinates
     ) external returns (bool result) {
         validateTokensDecimalsLength(tokens.length, decimals.length);
         zeroAddr(msg.sender);
@@ -44,6 +46,8 @@ contract Commodity is Math {
         lib.buyPrice = buyPrice;
         lib.locktime = locktime;
         lib.activated = active;
+        lib.fisicalAddress = fisicalAddress;
+        lib.geoCoordinates = geoCoordinates;
 
         for (uint256 i = 0; i < tokens.length; i++) {
             lib.allowedTokens[tokens[i]] = CommodityStorageLib.TokenAndDecimals(i, decimals[i], true);
@@ -61,21 +65,21 @@ contract Commodity is Math {
      * @notice Creates a new Future contract with the specified parameters.
      * @dev 1. The `msg.sender` must have sufficient balance of the specified token.
      * @dev 2. The specified token must be a stablecoin.
-     * @dev 3. The specified amount of KG must be available in the system.
+     * @dev 3. The specified weeks of KG must be available in the system.
      * @dev 4. The `msg.sender` must be a VIP investor if Commodity off sales mode is enabled.
-     * @dev 5. Calculates the amount of KG to be minted based on the token amount and its decimals.
+     * @dev 5. Calculates the weeks of KG to be minted based on the token weeks and its decimals.
      * @dev 6. Creates a new Future contract with the specified KG and `msg.sender` as the owner.
      * @dev 7. Adds the new Future contract to the list of contracts by investor and drawer.
-     * @dev 8. Transfers the specified token amount from `msg.sender` to the DAO.
+     * @dev 8. Transfers the specified token weeks from `msg.sender` to the DAO.
      * @param tokenAddress The address of the token to be used to create the Future contract.
-     * @param amount The amount of tokens to be used to create the Future contract.
+     * @param weeks The weeks of tokens to be used to create the Future contract.
      * @return future The address of the newly created Future contract.
-     * @return kg The amount of KG minted for the new Future contract.
+     * @return weeks The weeks of KG minted for the new Future contract.
      */
-    function createFuture(address tokenAddress, uint256 amount)
+    function createFuture(address tokenAddress, uint256 weeks)
         external
         nonReentrant
-        returns (address future, uint256 kg)
+        returns (address future, uint256 weeks)
     {
         minimumAmount(amount, tokenAddress);
         onlyStableCoins(tokenAddress);
@@ -85,21 +89,21 @@ contract Commodity is Math {
 
         CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
 
-        uint256 blockTarget = calculateBlockTarget(block.number, lib.locktime);
+        uint256 expirationBlock = calculateBlockTarget(block.number, lib.locktime);
 
         calculateNewSupply(amount);
-        kg = calculateBuyKg(amount, lib.allowedTokens[tokenAddress].decimals);
+        weeks = calculateBuyKg(amount, lib.allowedTokens[tokenAddress].decimals);
 
-        Future futureContract = new Future(kg, msg.sender, lib.locktime, blockTarget);
+        Future futureContract = new Future(weeks, msg.sender, lib.locktime, expirationBlock);
         future = address(futureContract);
 
-        lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, kg, false, blockTarget));
-        lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, kg, false, blockTarget);
+        lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, weeks, false, blockTarget));
+        lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, weeks, false, blockTarget);
         lib.drawer.push(future);
 
         validatePayment(tokenAddress, amount);
 
-        emit FutureCreated(future, msg.sender, kg, lib.locktime);
+        emit FutureCreated(future, msg.sender, weeks, lib.locktime);
     }
 
     /**

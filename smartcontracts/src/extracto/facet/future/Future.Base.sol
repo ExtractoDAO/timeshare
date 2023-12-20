@@ -9,9 +9,14 @@ abstract contract FBase is FAuth {
                                CONSTRUCTOR
     //////////////////////////////////////////////////////////////*/
 
-    constructor(uint256 _kg, address _investor, address _dao, uint256 _locktime, uint256 _blockTarget)
-        FAuth(_kg, _investor, _dao, _locktime, _blockTarget)
-    {}
+    constructor(
+        uint256 _weeks,
+        address _investor,
+        address _dao,
+        uint256 _locktime,
+        uint256 _expirationBlock,
+        bool _isLocked
+    ) FAuth(_weeks, _investor, _dao, _locktime, _expirationBlock, _isLocked) {}
 
     /*//////////////////////////////////////////////////////////////
                                BASE LOGIC
