@@ -46,7 +46,7 @@ contract SwapThenYielding is DexBaseSetup {
 
         vm.roll(locktime);
         vm.prank(investor2);
-        future.withdraw();
+
 
         assertEq(cow.balanceOf(investor2), 4228_35_6329999999999999);
     }

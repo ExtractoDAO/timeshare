@@ -15,6 +15,7 @@ abstract contract FStorage is FEvents {
     address public immutable dao;
     address public investor;
     uint256 public expirationBlock;
+    bool public isLocked;
     bool public burn;
     bytes32 orderId;
 

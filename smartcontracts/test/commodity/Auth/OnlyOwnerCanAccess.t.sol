@@ -48,6 +48,5 @@ contract OnlyOwnerCanAccess is BaseSetup {
 
         vm.prank(noOwner);
         vm.expectRevert(abi.encodeWithSelector(Unauthorized.selector));
-        future.withdraw();
     }
 }

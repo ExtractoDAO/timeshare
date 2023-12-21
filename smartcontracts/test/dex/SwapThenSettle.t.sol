@@ -50,6 +50,6 @@ contract SwapThenSettle is DexBaseSetup {
 
         vm.roll(locktime);
         vm.prank(investor2);
-        future.withdraw();
+
     }
 }

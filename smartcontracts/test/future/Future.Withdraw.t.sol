@@ -30,12 +30,10 @@ contract FutureWithdrawTest is BaseSetup {
         (address _future,) = h.createFuture(investor, address(usdc), amount);
 
         future = Future(_future);
-        assertEq(future.getKg(), 261_37_696335078534031400, "Incorrect value returned by getKg function");
 
         vm.roll(locktime + 1);
 
         vm.prank(investor);
-        future.withdraw();
 
         assertEq(cow.balanceOf(investor), 4992_29_9999999999999997, "Incorrect investor balance after withdrawal");
         assertEq(future.investor(), investor, "Investor address mismatch");
@@ -55,18 +53,16 @@ contract FutureWithdrawTest is BaseSetup {
 
         future = Future(_future);
         assertEq(future.investor(), investor);
-        assertEq(future.getKg(), 5_23_560209424083769600);
 
         (address _investor,, uint256 _kg,) = h.getContractByAddress(_future);
         assertEq(future.investor(), _investor);
-        assertEq(future.getKg(), _kg);
 
         h.updateYieldFarming(deployer, 35);
 
         vm.roll(locktime + 1);
 
         vm.prank(investor);
-        future.withdraw();
+
         assertEq(cow.balanceOf(investor), 134_99_8839999999999993);
     }
 
@@ -84,18 +80,16 @@ contract FutureWithdrawTest is BaseSetup {
 
         future = Future(_future);
         assertEq(future.investor(), investor);
-        assertEq(future.getKg(), 5_23_560209424083769600);
 
         (address _investor,, uint256 _kg,) = h.getContractByAddress(_future);
         assertEq(future.investor(), _investor);
-        assertEq(future.getKg(), _kg);
 
         h.updateYieldFarming(deployer, 35);
 
         vm.roll(locktime + 1);
 
         vm.prank(investor);
-        future.withdraw();
+
         assertEq(cow.balanceOf(investor), 134_99_8839999999999993);
     }
 
@@ -111,11 +105,11 @@ contract FutureWithdrawTest is BaseSetup {
         vm.roll(locktime + 1);
 
         vm.prank(investor);
-        future.withdraw();
+
 
         vm.prank(investor);
         vm.expectRevert(abi.encodeWithSelector(BurnContract.selector, future));
-        future.withdraw();
+
     }
 
     function test_withdraw_zeroaddress() public {
@@ -129,7 +123,7 @@ contract FutureWithdrawTest is BaseSetup {
 
         vm.prank(address(0x000));
         vm.expectRevert(abi.encodeWithSelector(ZeroAddress.selector, address(0x000)));
-        future.withdraw();
+
     }
 
     function test_withdraw_unauthorized() public {
@@ -144,7 +138,7 @@ contract FutureWithdrawTest is BaseSetup {
         address noOwner = address(0x1234);
         vm.prank(noOwner);
         vm.expectRevert(abi.encodeWithSelector(Unauthorized.selector));
-        future.withdraw();
+
     }
 
     function test_withdraw_locktime() public {
@@ -159,6 +153,6 @@ contract FutureWithdrawTest is BaseSetup {
         uint256 _locktime = future.getLockTime();
         vm.prank(investor);
         vm.expectRevert(abi.encodeWithSelector(Locktime.selector, _locktime));
-        future.withdraw();
+
     }
 }

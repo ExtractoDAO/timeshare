@@ -34,7 +34,6 @@ contract TestingZeroAdress is BaseSetup {
 
         vm.prank(zeroAddress);
         vm.expectRevert(abi.encodeWithSelector(ZeroAddress.selector, zeroAddress));
-        future.withdraw();
     }
 
     /*

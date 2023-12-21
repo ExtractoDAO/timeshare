@@ -13,8 +13,9 @@ contract Future is FBase {
         uint256 _weeks,
         address _investor,
         uint256 _locktime,
-        uint256 _expirationBlock
-    ) FBase(_weeks, _investor, msg.sender, _locktime, _expirationBlock) {}
+        uint256 _expirationBlock,
+        bool _isLocked
+    ) FBase(_weeks, _investor, msg.sender, _locktime, _expirationBlock, _isLocked) {}
 
     /*//////////////////////////////////////////////////////////////
                                FUTURE LOGIC

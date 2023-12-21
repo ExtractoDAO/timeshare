@@ -59,7 +59,7 @@ contract CommodityV201 is MathV201 {
         calculateNewSupply(amount);
         kg = calculateBuyKg(amount, lib.allowedTokens[tokenAddress].decimals);
 
-        Future futureContract = new Future(kg, msg.sender, lib.locktime, blockTarget);
+        Future futureContract = new Future(kg, msg.sender, lib.locktime, blockTarget, false);
         future = address(futureContract);
 
         lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, kg, false, blockTarget));

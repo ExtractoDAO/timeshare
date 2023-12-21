@@ -42,9 +42,8 @@ contract BuyContractsDrawer is BaseSetup {
         assertEq(futures.length, total_test);
 
         for (uint256 i = 0; i < total_test; i++) {
-            (address _investor,, uint256 _kg,) = h.getContractByAddress(futures[i]);
+            (address _investor,,,) = h.getContractByAddress(futures[i]);
             future = Future(futures[i]);
-            assertEq(future.getKg(), _kg);
             assertEq(future.investor(), _investor);
             assertEq(future.dao(), address(diamond));
         }

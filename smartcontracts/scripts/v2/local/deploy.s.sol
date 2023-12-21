@@ -9,6 +9,8 @@ import {Dex} from "../../../src/extracto/facet/dex/v2.0.0/Dex.sol";
 import {MockToken} from "../../../test/MockToken.t.sol";
 import {COW} from "../../../src/token/COW.sol";
 
+import "forge-std/console.sol";
+
 abstract contract Data is Script {
     bytes32 controllerPrivateKey =
         hex"ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
@@ -106,6 +108,9 @@ contract Local is Helper {
 
         usdt = new MockToken("USDT", commoditySupply * 1e18, 18);
         usdc = new MockToken("USDC", commoditySupply * 1e6, 6);
+
+        console.logAddress(address(usdt));
+
         usdt.transfer(0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 10000 * 1e18);
         usdc.transfer(0x70997970C51812dc3A010C7d01b50e0d17dc79C8, 10000 * 1e18);
         tokens.push(address(usdt));

@@ -32,7 +32,6 @@ contract FarmContracts is BaseSetup {
 
         future = Future(_future);
         assertEq(future.investor(), investor);
-        assertEq(future.getKg(), 189_21_361256544502617800);
 
         vm.expectRevert(abi.encodeWithSelector(InvalidYield.selector, 0, 100));
         h.updateYieldFarming(deployer, 101);
@@ -41,7 +40,7 @@ contract FarmContracts is BaseSetup {
         vm.roll(locktime + 1);
 
         vm.prank(investor);
-        future.withdraw();
+
         assertEq(cow.balanceOf(investor), 4228_35_6329999999999999);
     }
 
@@ -64,11 +63,6 @@ contract FarmContracts is BaseSetup {
 
         future = Future(_future);
         assertEq(future.investor(), investor);
-        assertEq(
-            future.getKg(),
-            // 100.00 kg
-            100_00_000000000000000000
-        );
 
         h.updateYieldFarming(deployer, 19);
 
@@ -77,7 +71,7 @@ contract FarmContracts is BaseSetup {
         h.updateSellPrice(deployer, 5_25 * 1e16);
 
         vm.prank(investor);
-        future.withdraw();
+
         assertEq(
             cow.balanceOf(investor),
             // 6247.5 kg

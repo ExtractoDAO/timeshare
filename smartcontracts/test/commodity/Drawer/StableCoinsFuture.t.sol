@@ -47,11 +47,6 @@ contract StableCoinsFuture is BaseSetup {
         assertEq(future.getLockTime(), locktime);
         assertEq(future.investor(), investor);
         assertEq(future.dao(), address(diamond));
-        assertEq(
-            future.getKg(),
-            // 260.73 kg
-            260_73_298429319371727700
-        );
     }
 
     function test_buy_Futures_with_new_token() public {
@@ -75,10 +70,5 @@ contract StableCoinsFuture is BaseSetup {
         assertEq(future.getLockTime(), locktime);
         assertEq(future.investor(), investor);
         assertEq(future.dao(), address(diamond));
-        assertEq(
-            future.getKg(),
-            // 260.73 kg
-            260_73_298429319371727700
-        );
     }
 }

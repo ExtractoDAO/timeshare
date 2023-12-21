@@ -7,9 +7,11 @@ import {Future} from "../../future/Future.sol";
 import "../../../../utils/math/UD60x18.sol";
 import {Math} from "./Commodity.Math.sol";
 
+import "forge-std/console.sol";
+
 contract Commodity is Math {
     event TokensMinted(uint256 amount, address investor);
-    event FutureCreated(address future, address owner, uint256 weeks, uint256 locktime);
+    event FutureCreated(address future, address owner, uint256 amountWeeks, uint256 locktime);
 
     /*//////////////////////////////////////////////////////////////
                                CONSTRUCTOR
@@ -28,7 +30,7 @@ contract Commodity is Math {
         bool active,
         address dao,
         address cow,
-        string fisicalAddress,
+        string memory fisicalAddress,
         uint256[] memory geoCoordinates
     ) external returns (bool result) {
         validateTokensDecimalsLength(tokens.length, decimals.length);
@@ -65,21 +67,21 @@ contract Commodity is Math {
      * @notice Creates a new Future contract with the specified parameters.
      * @dev 1. The `msg.sender` must have sufficient balance of the specified token.
      * @dev 2. The specified token must be a stablecoin.
-     * @dev 3. The specified weeks of KG must be available in the system.
+     * @dev 3. The specified amountWeeks of KG must be available in the system.
      * @dev 4. The `msg.sender` must be a VIP investor if Commodity off sales mode is enabled.
-     * @dev 5. Calculates the weeks of KG to be minted based on the token weeks and its decimals.
+     * @dev 5. Calculates the amountWeeks of KG to be minted based on the token amountWeeks and its decimals.
      * @dev 6. Creates a new Future contract with the specified KG and `msg.sender` as the owner.
      * @dev 7. Adds the new Future contract to the list of contracts by investor and drawer.
-     * @dev 8. Transfers the specified token weeks from `msg.sender` to the DAO.
+     * @dev 8. Transfers the specified token amountWeeks from `msg.sender` to the DAO.
      * @param tokenAddress The address of the token to be used to create the Future contract.
-     * @param weeks The weeks of tokens to be used to create the Future contract.
+     * @param amountWeeks The amountWeeks of tokens to be used to create the Future contract.
      * @return future The address of the newly created Future contract.
-     * @return weeks The weeks of KG minted for the new Future contract.
+     * @return amountWeeks The amountWeeks of KG minted for the new Future contract.
      */
-    function createFuture(address tokenAddress, uint256 weeks)
+    function createFuture(address tokenAddress, uint256 amount)
         external
         nonReentrant
-        returns (address future, uint256 weeks)
+        returns (address future, uint256 amountWeeks)
     {
         minimumAmount(amount, tokenAddress);
         onlyStableCoins(tokenAddress);
@@ -92,18 +94,18 @@ contract Commodity is Math {
         uint256 expirationBlock = calculateBlockTarget(block.number, lib.locktime);
 
         calculateNewSupply(amount);
-        weeks = calculateBuyKg(amount, lib.allowedTokens[tokenAddress].decimals);
+        amountWeeks = calculateBuyKg(amount, lib.allowedTokens[tokenAddress].decimals);
 
-        Future futureContract = new Future(weeks, msg.sender, lib.locktime, expirationBlock);
+        Future futureContract = new Future(amountWeeks, msg.sender, lib.locktime, expirationBlock, false);
         future = address(futureContract);
 
-        lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, weeks, false, blockTarget));
-        lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, weeks, false, blockTarget);
+        lib.contractsByInvestor[msg.sender].push(CommodityStorageLib.Contract(msg.sender, future, amountWeeks, false, expirationBlock));
+        lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, amountWeeks, false, expirationBlock);
         lib.drawer.push(future);
 
         validatePayment(tokenAddress, amount);
 
-        emit FutureCreated(future, msg.sender, weeks, lib.locktime);
+        emit FutureCreated(future, msg.sender, amountWeeks, lib.locktime);
     }
 
     /**
