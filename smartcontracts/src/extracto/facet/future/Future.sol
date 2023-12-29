@@ -21,7 +21,7 @@ contract Future is FBase {
                                FUTURE LOGIC
     //////////////////////////////////////////////////////////////*/
 
-      function lockTimeshare() external returns (bool) {
+    function lockTimeshare() external returns (bool) {
         onlyInvestor(); // or onyDAO?
         isLocked = true;
         return true;

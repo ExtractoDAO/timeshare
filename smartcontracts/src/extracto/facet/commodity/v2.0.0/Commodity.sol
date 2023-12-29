@@ -29,9 +29,7 @@ contract Commodity is Math {
         uint8 yieldFarming,
         bool active,
         address dao,
-        address cow,
-        string memory fisicalAddress,
-        uint256[] memory geoCoordinates
+        address cow
     ) external returns (bool result) {
         validateTokensDecimalsLength(tokens.length, decimals.length);
         zeroAddr(msg.sender);
@@ -48,8 +46,6 @@ contract Commodity is Math {
         lib.buyPrice = buyPrice;
         lib.locktime = locktime;
         lib.activated = active;
-        lib.fisicalAddress = fisicalAddress;
-        lib.geoCoordinates = geoCoordinates;
 
         for (uint256 i = 0; i < tokens.length; i++) {
             lib.allowedTokens[tokens[i]] = CommodityStorageLib.TokenAndDecimals(i, decimals[i], true);

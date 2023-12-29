@@ -3,7 +3,6 @@ src = 'src'                    # the source directory
 test = 'test'                  # the test directory
 out = 'artifacts/'            # the output directory (for artifacts)
 libs = ["./lib"]
-viaIR = true
 remappings = []                        # a list of remappings
 libraries = []                         # a list of deployed libraries to link against
 cache = true                           # whether to cache builds or not
