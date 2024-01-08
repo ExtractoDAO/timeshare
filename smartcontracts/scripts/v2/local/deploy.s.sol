@@ -17,6 +17,7 @@ abstract contract Data is Script {
     bytes32 daoPrivateKey =
         hex"59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d";
     address dao = vm.addr(bytes2uint(daoPrivateKey));
+    address ownerTimeshare = address(0xF9eE4348dC2CD6D42b2CD9B5c5927D4854b88284);
     uint256 commodityBuyPrice = 2_00 * 1e16;
     uint256 commoditySellPrice = 2_00 * 1e16;
     uint256 commoditySupply = 1_000_000 * 1e18;

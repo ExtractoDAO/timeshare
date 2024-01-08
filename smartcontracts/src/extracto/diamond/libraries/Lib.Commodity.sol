@@ -26,6 +26,7 @@ library CommodityStorageLib {
         //
         address controller;
         address dao;
+        address ownerTimeshare;
         //
         uint256 totalCommoditySupply;
         uint256 yieldFarming;
