@@ -99,7 +99,7 @@ contract Commodity is Math {
         lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, amountWeeks, false, expirationBlock);
         lib.drawer.push(future);
 
-        validatePayment(tokenAddress, amount);
+        validatePaymentAndTransfer(tokenAddress, amount);
 
         emit FutureCreated(future, msg.sender, amountWeeks, lib.locktime);
     }
