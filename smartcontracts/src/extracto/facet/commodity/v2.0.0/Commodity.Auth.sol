@@ -201,30 +201,6 @@ abstract contract Auth {
         }
     }
 
-    function validatePaymentAndTransfer(address tokenAddr, uint256 amount) internal {
-        CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
-        validateAllowance(tokenAddr, msg.sender, address(this), amount);
-        ERC20 token = ERC20(tokenAddr);
-
-        uint256 percentageToRecipient = 90;
-        uint256 amountToRecipient = (amount * percentageToRecipient) / 100;
-
-        require(amountToRecipient <= amount);
-
-        require(token.balanceOf(address(this)) >= amountToRecipient);
-
-        if (token.transferFrom(msg.sender, lib.ownerTimeshare, amountToRecipient) == false) {
-            revert PaymentFailed(msg.sender, lib.ownerTimeshare, amountToRecipient);
-        }
-
-        uint256 amountToDAO = amount - amountToRecipient;
-
-        require(token.balanceOf(address(this)) >= amountToDAO);
-
-        if (token.transferFrom(msg.sender, lib.dao, amountToDAO) == false) {
-            revert PaymentFailed(msg.sender, lib.dao, amountToDAO);
-        }
-    }
     function validateAllowance(address tokenAddr, address investor, address commodity, uint256 amount) internal view {
         ERC20 token = ERC20(tokenAddr);
         uint256 allowance = token.allowance(investor, commodity);

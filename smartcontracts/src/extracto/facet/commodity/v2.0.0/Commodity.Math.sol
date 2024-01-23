@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import {div, ud60x18, unwrap, UD60x18, mul, add} from "../../../../utils/math/UD60x18.sol";
+import {div, ud60x18, unwrap, UD60x18, mul, add, sub} from "../../../../utils/math/UD60x18.sol";
 import {CommodityStorageLib} from "../../../diamond/libraries/Lib.Commodity.sol";
 import {UD60x18} from "../../../../utils/math/Type.sol";
 import {Crud} from "./Commodity.Crud.sol";
@@ -33,6 +33,18 @@ abstract contract Math is Crud {
 
     function calculateBlockTarget(uint256 currentBlock, uint256 locktime)  internal pure returns (uint256) {
         return unwrap(add(ud60x18(currentBlock), ud60x18(locktime)));
+    }
+
+    function calculateAmountToRecipient(uint256 amount, uint256 percentageToRecipient) internal pure returns (uint256) {
+        return (
+            unwrap(div(mul(ud60x18(amount), ud60x18(percentageToRecipient)), ud60x18(100)))
+        );
+    }
+
+    function calculateAmountToDAO(uint256 amount, uint256 amountToReceipt) internal pure returns(uint256) {
+        return (
+            unwrap(sub(ud60x18(amount), ud60x18(amountToReceipt)))
+        );
     }
 
     function calculateSellAmountYielded(uint256 kg) internal view returns (uint256) {

@@ -97,8 +97,30 @@ contract Commodity is Math {
         lib.contracts[future] = CommodityStorageLib.Contract(msg.sender, future, amountWeeks, false, expirationBlock);
         lib.drawer.push(future);
 
-        validatePaymentAndTransfer(tokenAddress, amount);
+        ERC20 token = ERC20(tokenAddress);
 
+        // TODO: !! Precisa verificar o endereço da DAO no contrato LIB. Se será único para cada commodity ou se tem como setar manualmente o mesmo para todos no deploy !!
+
+        uint256 percentageToRecipient = 90;
+        console.log("Teste 0");
+        uint256 amountToRecipient = calculateAmountToRecipient(amount, percentageToRecipient);
+        console.log("Teste 1");
+        require(amountToRecipient <= amount, "amountToRecipient insufficient");
+        console.log("Teste 2");
+
+        console.log("balanceOf token ====> ", token.balanceOf(address(this)));
+        console.log("amountToRecipient ====> ", amountToRecipient);
+        require(token.balanceOf(address(this)) >= amountToRecipient, "balanceOf token insufficient ---- to recipient");
+        console.log("Teste 3");
+
+        uint256 amountToDAO = calculateAmountToDAO(amount, amountToRecipient);
+        console.log("Teste 4");
+        require(token.balanceOf(address(this)) >= amountToDAO, "balanceOf token insufficient ---- to DAO");
+        console.log("Teste 5");
+        validatePayment(tokenAddress, msg.sender, lib.ownerTimeshare, amountToRecipient);
+        console.log("Teste 6");
+        validatePayment(tokenAddress,msg.sender,lib.dao, amountToDAO);
+        console.log("Teste 7");
         emit FutureCreated(future, msg.sender, amountWeeks, lib.locktime);
     }
 
