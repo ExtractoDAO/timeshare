@@ -80,7 +80,6 @@ abstract contract Helper is Data {
         selectors[23] = commodity.delTokens.selector;
         selectors[24] = commodity.init.selector;
         selectors[25] = commodity.createFuture.selector;
-        selectors[26] = commodity.mintToken.selector;
     }
 
     function dexFacetSelectors()
@@ -122,8 +121,8 @@ contract Local is Helper {
         commodity = new Commodity();
         diamond = new Diamond();
         dex = new Dex();
-        cow = new COW();
-        cow.setDao(address(diamond));
+
+
 
         Facet memory commodityFunctions = Facet({
             facetAddress: address(commodity),
@@ -135,7 +134,7 @@ contract Local is Helper {
             bytes4(
                 keccak256(
                     bytes(
-                        "init(address[],uint8[],uint256,uint256,uint256,uint256,uint8,bool,address,address)"
+                        "init(address[],uint8[],uint256,uint256,uint256,uint256,uint8,bool,address)"
                     )
                 )
             ),
@@ -147,8 +146,7 @@ contract Local is Helper {
             commoditySellPrice,
             yieldFarming,
             activateSells,
-            dao,
-            address(cow)
+            dao
         );
         commodityCut.push(commodityFunctions);
         diamond.diamondCut(commodityCut, address(commodity), init);
@@ -165,7 +163,7 @@ contract Local is Helper {
         console.log("Diamond address:   ", address(diamond));
         console.log("USDT address:      ", address(usdt));
         console.log("USDC address:      ", address(usdc));
-        console.log("COW address:       ", address(cow));
+
         console.log("Dex address:       ", address(dex));
         vm.stopBroadcast();
     }

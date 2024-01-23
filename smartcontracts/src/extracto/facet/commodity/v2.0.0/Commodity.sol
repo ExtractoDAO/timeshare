@@ -28,14 +28,12 @@ contract Commodity is Math {
         uint256 sellPrice,
         uint8 yieldFarming,
         bool active,
-        address dao,
-        address cow
+        address dao
     ) external returns (bool result) {
         validateTokensDecimalsLength(tokens.length, decimals.length);
         zeroAddr(msg.sender);
 
         initController(msg.sender);
-        setCOW(cow);
         setDAO(dao);
 
         CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
@@ -102,37 +100,6 @@ contract Commodity is Math {
         validatePaymentAndTransfer(tokenAddress, amount);
 
         emit FutureCreated(future, msg.sender, amountWeeks, lib.locktime);
-    }
-
-    /**
-     * @notice Mints COW tokens for the investor based on a futures contract.
-     * @dev 1. onlyFutures: Only a futures contract issued by the Commodity can call this function.
-     * @dev 2. The futures contract (msg.sender) will marked as burned.
-     * @dev 3. The total number of COW tokens to be sent to the owner of the futures contract is calculated using `calculateSellAmountYielded`.
-     * @dev 4. The COW Contract sends the tokens to the investor.
-     * @param commodityAmount The amount of commodity used as the basis for calculating the investor's payout.
-     * @param investor The address of the owner of the futures contract who will receive the tokens. The tokens will be received by the investor, not by the contract.
-     */
-    function mintToken(uint256 commodityAmount, address investor) external nonReentrant {
-        zeroAddr(investor);
-        zeroAddr(msg.sender);
-        onlyActive();
-        onlyFutures(msg.sender);
-        onlyNotBurnedFutures(msg.sender);
-        CommodityStorageLib.Storage storage lib = CommodityStorageLib.getCommodityStorage();
-
-        int256 contractIndex = findContractIndex(investor, msg.sender);
-
-        CommodityStorageLib.Contract storage contractToUpdate = lib.contractsByInvestor[investor][uint256(contractIndex)];
-        contractToUpdate.burn = true;
-
-        lib.contracts[msg.sender].burn = true;
-
-        uint256 amount = calculateSellAmountYielded(commodityAmount);
-
-        lib.cow.pay(investor, amount);
-
-        emit TokensMinted(amount, investor);
     }
 
      function findContractIndex(address investor, address futureAddress) internal view returns (int256) {
